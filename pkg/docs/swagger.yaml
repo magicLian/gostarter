@@ -1,0 +1,2014 @@
+definitions:
+  gitlab_wise-paas_com_ifactory_patrol-models_components_simplejson.Json:
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.ApprovalTaskForm:
+    properties:
+      pass:
+        type: boolean
+      remark:
+        type: string
+    type: object
+  models.BatchCreatePatrolRuleForm:
+    properties:
+      devices:
+        items:
+          $ref: '#/definitions/models.CreateRuleDeviceDto'
+        type: array
+      ruleInfos:
+        items:
+          $ref: '#/definitions/models.CreatePatrolRuleDto'
+        type: array
+    required:
+    - devices
+    - ruleInfos
+    type: object
+  models.CompleteTaskItemForm:
+    properties:
+      images:
+        items:
+          type: string
+        type: array
+      remark:
+        type: string
+      status:
+        type: string
+    type: object
+  models.CreateOrUpdateOrgByTenantForm:
+    properties:
+      description:
+        type: string
+      orgName:
+        minLength: 1
+        type: string
+      parentId:
+        type: string
+      subscriptionId:
+        type: string
+      tenantId:
+        type: string
+      username:
+        type: string
+    required:
+    - orgName
+    type: object
+  models.CreateOrUpdateOrgForm:
+    properties:
+      orgName:
+        type: string
+    type: object
+  models.CreatePatrolRuleDto:
+    properties:
+      approver:
+        type: string
+      completeNeedApproval:
+        type: boolean
+      day:
+        type: string
+      effectTime:
+        type: string
+      expireTime:
+        type: string
+      frequency:
+        allOf:
+        - $ref: '#/definitions/models.Frequency'
+        minLength: 1
+      hour:
+        type: string
+      jobItems:
+        items:
+          $ref: '#/definitions/models.CreatePatrolRuleJobItemDto'
+        type: array
+      month:
+        description: const PartolRuleDateWildcard means every month
+        type: string
+      name:
+        type: string
+      params:
+        $ref: '#/definitions/gitlab_wise-paas_com_ifactory_patrol-models_components_simplejson.Json'
+      remindRules:
+        items:
+          $ref: '#/definitions/models.CreatePatrolTaskRemindRuleDto'
+        type: array
+      singleTaskDuration:
+        minimum: 1
+        type: integer
+      taskDescription:
+        type: string
+      week:
+        type: string
+      year:
+        type: string
+    required:
+    - frequency
+    - singleTaskDuration
+    type: object
+  models.CreatePatrolRuleJobItemDto:
+    properties:
+      content:
+        type: string
+      images:
+        items:
+          type: string
+        type: array
+      isChainJob:
+        type: boolean
+      owner:
+        type: string
+      priority:
+        type: integer
+    type: object
+  models.CreatePatrolTaskRemindRuleDto:
+    properties:
+      recipients:
+        items:
+          type: string
+        minItems: 1
+        type: array
+      remindCondition:
+        type: string
+      remindPeriod:
+        type: integer
+      remindType:
+        minLength: 1
+        type: string
+    required:
+    - recipients
+    - remindType
+    type: object
+  models.CreateRuleDeviceDto:
+    properties:
+      deviceId:
+        type: string
+      deviceType:
+        type: string
+      groupId:
+        type: string
+      location:
+        type: string
+    type: object
+  models.CreateTaskTemplateDto:
+    properties:
+      creatorId:
+        type: string
+      creatorName:
+        type: string
+      deviceSystem:
+        type: string
+      deviceType:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/models.CreateTaskTemplateJobItemDto'
+        type: array
+      name:
+        type: string
+    type: object
+  models.CreateTaskTemplateJobItemDto:
+    properties:
+      frequency:
+        type: string
+      images:
+        items:
+          type: string
+        type: array
+      isChainJob:
+        type: boolean
+      name:
+        type: string
+      priority:
+        type: integer
+    type: object
+  models.Device:
+    properties:
+      deviceCode:
+        type: string
+      deviceName:
+        type: string
+      deviceType:
+        type: string
+      id:
+        type: string
+      location:
+        type: string
+      modelName:
+        type: string
+    type: object
+  models.Frequency:
+    enum:
+    - once
+    - yearly
+    - half_yearly
+    - quarterly
+    - monthly
+    - half_monthly
+    - weekly
+    - daily
+    type: string
+    x-enum-varnames:
+    - FREQUENCY_ONCE
+    - FREQUENCY_YEARLY
+    - FREQUENCY_HALF_YEARLY
+    - FREQUENCY_QUARTERLY
+    - FREQUENCY_MONTHLY
+    - FREQUENCY_HALF_MONTHLY
+    - FREQUENCY_WEEKLY
+    - FREQUENCY_DAILY
+  models.GeneralErrorResponse:
+    properties:
+      error:
+        description: Only return in the dev environment
+        type: string
+      message:
+        type: string
+    type: object
+  models.GeneralListResponse:
+    properties:
+      results:
+        items: {}
+        type: array
+      total:
+        type: integer
+    type: object
+  models.GeneralSuccessMessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.GetOrgsQuery:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/models.Org'
+        type: array
+      total:
+        type: integer
+    type: object
+  models.Org:
+    properties:
+      createTime:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      lastModifyTime:
+        type: string
+      name:
+        type: string
+      parentId:
+        type: string
+      subscriptionId:
+        type: string
+      tenantId:
+        type: string
+      username:
+        type: string
+    type: object
+  models.PatrolRuleDevice:
+    properties:
+      deviceId:
+        type: string
+      deviceType:
+        type: string
+      groupId:
+        type: string
+      id:
+        type: integer
+      location:
+        type: string
+      orgId:
+        type: string
+      patrolRuleId:
+        type: string
+    type: object
+  models.PatrolRuleDto:
+    properties:
+      approver:
+        type: string
+      completeNeedApproval:
+        type: boolean
+      createTime:
+        type: string
+      creatorId:
+        type: string
+      creatorName:
+        type: string
+      day:
+        type: string
+      devices:
+        items:
+          $ref: '#/definitions/models.PatrolRuleDevice'
+        type: array
+      effectTime:
+        type: string
+      expireTime:
+        type: string
+      frequency:
+        $ref: '#/definitions/models.Frequency'
+      hour:
+        type: string
+      id:
+        type: string
+      jobItems:
+        items:
+          $ref: '#/definitions/models.PatrolRuleJobItem'
+        type: array
+      lastModifyBy:
+        description: username
+        type: string
+      lastModifyTime:
+        type: string
+      month:
+        description: const PartolRuleDateWildcard means every month
+        type: string
+      name:
+        type: string
+      orgId:
+        type: string
+      params:
+        $ref: '#/definitions/gitlab_wise-paas_com_ifactory_patrol-models_components_simplejson.Json'
+      patrolTasks:
+        items:
+          $ref: '#/definitions/models.PatrolTask'
+        type: array
+      remindRules:
+        items:
+          $ref: '#/definitions/models.PatrolTaskRemindRule'
+        type: array
+      singleTaskDuration:
+        description: time second
+        type: integer
+      status:
+        description: scheduling/paused
+        type: string
+      taskDescription:
+        type: string
+      week:
+        type: string
+      year:
+        type: string
+    type: object
+  models.PatrolRuleJobItem:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          type: string
+        type: array
+      isChainJob:
+        type: boolean
+      orgId:
+        type: string
+      owner:
+        type: string
+      params:
+        $ref: '#/definitions/gitlab_wise-paas_com_ifactory_patrol-models_components_simplejson.Json'
+      patrolRuleId:
+        type: string
+      priority:
+        type: integer
+      remark:
+        type: string
+      status:
+        type: string
+    type: object
+  models.PatrolTask:
+    properties:
+      completeTime:
+        type: string
+      createTime:
+        type: string
+      description:
+        description: Owner        string           `json:"owner"`
+        type: string
+      endTime:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      orgId:
+        type: string
+      params:
+        $ref: '#/definitions/gitlab_wise-paas_com_ifactory_patrol-models_components_simplejson.Json'
+      remarks:
+        type: string
+      ruleId:
+        type: string
+      startTime:
+        type: string
+      status:
+        type: string
+    type: object
+  models.PatrolTaskDto:
+    properties:
+      completeTime:
+        type: string
+      createTime:
+        type: string
+      description:
+        description: Owner        string           `json:"owner"`
+        type: string
+      endTime:
+        type: string
+      frequency:
+        type: string
+      id:
+        type: string
+      jobItems:
+        items:
+          $ref: '#/definitions/models.PatrolTaskItem'
+        type: array
+      name:
+        type: string
+      orgId:
+        type: string
+      params:
+        $ref: '#/definitions/gitlab_wise-paas_com_ifactory_patrol-models_components_simplejson.Json'
+      remarks:
+        type: string
+      ruleId:
+        type: string
+      startTime:
+        type: string
+      status:
+        type: string
+    type: object
+  models.PatrolTaskItem:
+    properties:
+      completeTime:
+        type: string
+      content:
+        type: string
+      deviceGroupId:
+        type: string
+      deviceId:
+        type: string
+      deviceLocation:
+        type: string
+      deviceModel:
+        type: string
+      deviceType:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          type: string
+        type: array
+      isChainJob:
+        type: boolean
+      orgId:
+        type: string
+      owner:
+        type: string
+      priority:
+        type: integer
+      remark:
+        type: string
+      status:
+        type: string
+      taskId:
+        type: string
+    type: object
+  models.PatrolTaskItemDto:
+    properties:
+      completeTime:
+        type: string
+      content:
+        type: string
+      deviceGroupId:
+        type: string
+      deviceId:
+        type: string
+      deviceLocation:
+        type: string
+      deviceModel:
+        type: string
+      deviceType:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          type: string
+        type: array
+      isChainJob:
+        type: boolean
+      orgId:
+        type: string
+      owner:
+        type: string
+      priority:
+        type: integer
+      remark:
+        type: string
+      status:
+        type: string
+      taskCreateTime:
+        type: string
+      taskDescription:
+        type: string
+      taskEndTime:
+        type: string
+      taskId:
+        type: string
+      taskRemarks:
+        type: string
+      taskStartTime:
+        type: string
+    type: object
+  models.PatrolTaskRemindRule:
+    properties:
+      id:
+        type: integer
+      patrolRuleId:
+        type: string
+      recipients:
+        description: RemindMailTemplate string         `json:"remindMailTemplate"`
+        items:
+          type: string
+        type: array
+      remindCondition:
+        description: 提醒条件，拼接到查询的sql中，筛选满足条件的数据
+        type: string
+      remindPeriod:
+        description: The unit is day, and - 1 represents daily reminder
+        type: integer
+      remindType:
+        type: string
+    type: object
+  models.TaskTemplateDto:
+    properties:
+      createdAt:
+        type: string
+      creatorId:
+        type: string
+      creatorName:
+        type: string
+      deviceSystem:
+        type: string
+      deviceType:
+        type: string
+      id:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/models.TaskTemplateJobItem'
+        type: array
+      name:
+        type: string
+      orgId:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.TaskTemplateJobItem:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      frequency:
+        type: string
+      id:
+        type: string
+      images:
+        items:
+          type: string
+        type: array
+      isChainJob:
+        type: boolean
+      name:
+        type: string
+      orgId:
+        type: string
+      priority:
+        type: integer
+      taskTemplateId:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.UpdateTaskTemplateDto:
+    properties:
+      creatorId:
+        type: string
+      creatorName:
+        type: string
+      deviceSystem:
+        type: string
+      deviceType:
+        type: string
+      id:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/models.TaskTemplateJobItem'
+        type: array
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: ping example
+      tags:
+      - example
+  /asset-register/devices:
+    get:
+      consumes:
+      - application/json
+      description: get device from asset-register
+      parameters:
+      - description: device code
+        in: query
+        name: deviceCode
+        type: string
+      - description: device code
+        in: query
+        name: location
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Device'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get device from asset-register
+      tags:
+      - asset-register
+  /file/upload:
+    post:
+      consumes:
+      - application/json
+      description: upload file for create rule
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: resource type
+        in: formData
+        name: resource
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: upload file for create rule
+      tags:
+      - file
+  /org/:
+    get:
+      consumes:
+      - application/json
+      description: get current org
+      parameters:
+      - description: org id
+        in: query
+        name: orgId
+        type: string
+      - description: org id in cookie
+        in: header
+        name: orgId
+        type: string
+      - description: org id in header
+        in: header
+        name: x_orgId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Org'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get current org
+      tags:
+      - org
+  /orgs/:
+    post:
+      consumes:
+      - application/json
+      description: create org
+      parameters:
+      - description: create org form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOrUpdateOrgForm'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Org'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: create org
+      tags:
+      - org
+  /orgs/{orgId}:
+    delete:
+      consumes:
+      - application/json
+      description: delete org
+      parameters:
+      - description: org id
+        in: path
+        name: orgId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: delete org
+      tags:
+      - org
+    put:
+      consumes:
+      - application/json
+      description: update org
+      parameters:
+      - description: org id
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: update org form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOrUpdateOrgForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update org
+      tags:
+      - org
+  /orgs/tenants:
+    get:
+      consumes:
+      - application/json
+      description: get org list
+      parameters:
+      - description: org name
+        in: query
+        name: orgName
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetOrgsQuery'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get org list
+      tags:
+      - org
+    post:
+      consumes:
+      - application/json
+      description: create org by tenant
+      parameters:
+      - description: create org form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOrUpdateOrgByTenantForm'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Org'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: create org by tenant
+      tags:
+      - org
+  /orgs/tenants/{tenantId}:
+    delete:
+      consumes:
+      - application/json
+      description: delete org by tenant
+      parameters:
+      - description: tenant id
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: delete org by tenant
+      tags:
+      - org
+    get:
+      consumes:
+      - application/json
+      description: get org by tenant
+      parameters:
+      - description: tenant id
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Org'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get org by tenant
+      tags:
+      - org
+    patch:
+      consumes:
+      - application/json
+      description: update org by tenant
+      parameters:
+      - description: tenant id
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: update org form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOrUpdateOrgByTenantForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update org by tenant
+      tags:
+      - org
+  /rule:
+    get:
+      consumes:
+      - application/json
+      description: get patrol rule list
+      parameters:
+      - description: status of rule
+        in: query
+        name: status
+        type: string
+      - description: frequency
+        in: query
+        name: frequency
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: createTimeStart
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: createTimeEnd
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: effectTimeStart
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: effectTimeEnd
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: expireTimeStart
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: expireTimeEnd
+        type: string
+      - description: execute year string
+        in: query
+        name: executeYearStr
+        type: string
+      - description: execute month str
+        in: query
+        name: executeMonthStr
+        type: string
+      - description: execute week str
+        in: query
+        name: executeWeekStr
+        type: string
+      - description: execute day string
+        in: query
+        name: executeDayStr
+        type: string
+      - description: execute hour string
+        in: query
+        name: executeHourStr
+        type: string
+      - description: whether complete rule task need approval
+        in: query
+        name: needApproval
+        type: boolean
+      - description: approver
+        in: query
+        name: approver
+        type: string
+      - description: max results in every page
+        in: query
+        name: maxResults
+        type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: priority used for sorting
+        in: query
+        name: priority
+        type: string
+      - description: desc or asc
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.GeneralListResponse'
+            - properties:
+                results:
+                  items:
+                    $ref: '#/definitions/models.PatrolRuleDto'
+                  type: array
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get patrol rule list
+      tags:
+      - rule
+  /rule/{ruleId}:
+    delete:
+      consumes:
+      - application/json
+      description: delete patrol rule by id
+      parameters:
+      - description: rule id
+        in: path
+        name: ruleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: delete patrol rule by id
+      tags:
+      - rule
+    get:
+      consumes:
+      - application/json
+      description: get patrol rule by id
+      parameters:
+      - description: rule id
+        in: path
+        name: ruleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PatrolRuleDto'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get patrol rule by id
+      tags:
+      - rule
+  /rule/{ruleId}/disable:
+    put:
+      consumes:
+      - application/json
+      description: disable patrol rule by id
+      parameters:
+      - description: rule id
+        in: path
+        name: ruleId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: disable patrol rule by id
+      tags:
+      - rule
+  /rule/batch:
+    post:
+      consumes:
+      - application/json
+      description: batch create patrol rule
+      parameters:
+      - description: Batch create rule forms
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.BatchCreatePatrolRuleForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: batch create patrol rule
+      tags:
+      - rule
+  /system/remind/rule:
+    get:
+      consumes:
+      - application/json
+      description: get system remind rule
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.PatrolTaskRemindRule'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get system remind rule
+      tags:
+      - system
+    post:
+      consumes:
+      - application/json
+      description: cteate system remind rule
+      parameters:
+      - description: form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePatrolTaskRemindRuleDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PatrolTaskRemindRule'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: create system remind rule
+      tags:
+      - system
+  /system/remind/rule/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete system remind rule
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: delete system remind rule
+      tags:
+      - system
+    put:
+      consumes:
+      - application/json
+      description: update system remind rule
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: form
+        in: body
+        name: form
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePatrolTaskRemindRuleDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update system remind rule
+      tags:
+      - system
+  /task:
+    get:
+      consumes:
+      - application/json
+      description: get task list
+      parameters:
+      - description: task id
+        in: query
+        name: taskId
+        type: string
+      - description: status of task
+        in: query
+        name: status
+        type: string
+      - description: device id for task processing
+        in: query
+        name: deviceId
+        type: string
+      - description: device location for task processing
+        in: query
+        name: deviceLocation
+        type: string
+      - description: device id or location joint fuzzy query
+        in: query
+        name: deviceIdOrLocation
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: createTimeStart
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: createTimeEnd
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: startTimeStart
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: startTimeEnd
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: endTimeStart
+        type: string
+      - description: 'create time start.foramt: 2006-01-02T15:04:05Z07:00'
+        in: query
+        name: endTimeEnd
+        type: string
+      - description: max results in every page
+        in: query
+        name: maxResults
+        type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: priority used for sorting
+        in: query
+        name: priority
+        type: string
+      - description: desc or asc
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.GeneralListResponse'
+            - properties:
+                results:
+                  items:
+                    $ref: '#/definitions/models.PatrolTaskDto'
+                  type: array
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task list
+      tags:
+      - task
+  /task/{ruleId}/job/{filename}:
+    get:
+      consumes:
+      - application/json
+      description: get rule job file by rule id and file name
+      parameters:
+      - description: rule id
+        in: path
+        name: ruleId
+        required: true
+        type: integer
+      - description: job file name
+        in: path
+        name: filename
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get rule job file by rule id and file name
+      tags:
+      - rule
+  /task/{taskId}:
+    delete:
+      consumes:
+      - application/json
+      description: mark the task status as deleted
+      parameters:
+      - description: task id
+        in: path
+        name: taskId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: mark the task status as deleted
+      tags:
+      - task
+    get:
+      consumes:
+      - application/json
+      description: get task by id
+      parameters:
+      - description: task id
+        in: path
+        name: taskId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PatrolTaskDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task by id
+      tags:
+      - task
+  /task/{taskId}/approval:
+    put:
+      consumes:
+      - application/json
+      description: approval task by id
+      parameters:
+      - description: task id
+        in: path
+        name: taskId
+        required: true
+        type: string
+      - description: approval task form
+        in: body
+        name: form
+        schema:
+          $ref: '#/definitions/models.ApprovalTaskForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: approval task by id
+      tags:
+      - task
+  /task/{taskId}/cancel:
+    put:
+      consumes:
+      - application/json
+      description: cancel task by id
+      parameters:
+      - description: task id
+        in: path
+        name: taskId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: cancel task by id
+      tags:
+      - task
+  /task/item:
+    get:
+      consumes:
+      - application/json
+      description: get task items
+      parameters:
+      - description: task id
+        in: query
+        name: taskId
+        required: true
+        type: string
+      - description: status of task
+        in: query
+        name: status
+        type: string
+      - description: rule id of task
+        in: query
+        name: ruleId
+        type: string
+      - description: device id of task
+        in: query
+        name: deviceId
+        type: string
+      - description: owner of task
+        in: query
+        name: owner
+        type: string
+      - description: max results in every page
+        in: query
+        name: maxResults
+        type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: priority used for sorting
+        in: query
+        name: priority
+        type: string
+      - description: desc or asc
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PatrolTaskItem'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task items
+      tags:
+      - task
+  /task/item/{itemId}:
+    get:
+      consumes:
+      - application/json
+      description: get task item by id
+      parameters:
+      - description: task item id
+        in: path
+        name: itemId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PatrolTaskItemDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task item by id
+      tags:
+      - task
+  /task/item/{itemId}/complete:
+    put:
+      consumes:
+      - application/json
+      description: complete task item by item id
+      parameters:
+      - description: task id
+        in: path
+        name: itemId
+        required: true
+        type: integer
+      - description: task id
+        in: body
+        name: form
+        schema:
+          $ref: '#/definitions/models.CompleteTaskItemForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: complete task item by item id
+      tags:
+      - task
+  /task/item/{itemId}/image:
+    post:
+      consumes:
+      - application/json
+      description: upload task item image
+      parameters:
+      - description: task id
+        in: path
+        name: itemId
+        required: true
+        type: integer
+      - description: upload file
+        in: formData
+        name: file
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GeneralSuccessMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: upload task item image
+      tags:
+      - task
+  /task/item/{itemId}/image/{imageName}:
+    get:
+      consumes:
+      - application/json
+      description: get task item image by item id and image name
+      parameters:
+      - description: task id
+        in: path
+        name: itemId
+        required: true
+        type: integer
+      - description: image file name
+        in: path
+        name: imageName
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task item image by item id and image name
+      tags:
+      - task
+  /taskTemplates:
+    get:
+      consumes:
+      - application/json
+      description: get task template list
+      parameters:
+      - description: template name
+        in: query
+        name: name
+        type: string
+      - description: device system
+        in: query
+        name: deviceSystem
+        type: string
+      - description: device type
+        in: query
+        name: deviceType
+        type: string
+      - description: max results in every page
+        in: query
+        name: maxResults
+        type: integer
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.GeneralListResponse'
+            - properties:
+                results:
+                  items:
+                    $ref: '#/definitions/models.TaskTemplateDto'
+                  type: array
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task template list
+      tags:
+      - taskTemplate
+    post:
+      consumes:
+      - application/json
+      description: create taskTemplate
+      parameters:
+      - description: template
+        in: body
+        name: template
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateTaskTemplateDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.TaskTemplateDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: create taskTemplate
+      tags:
+      - taskTemplate
+  /taskTemplates/{templateId}:
+    delete:
+      consumes:
+      - application/json
+      description: delete task template by id
+      parameters:
+      - description: template id
+        in: path
+        name: templateId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: delete task template by id
+      tags:
+      - taskTemplate
+    get:
+      consumes:
+      - application/json
+      description: get task template by id
+      parameters:
+      - description: template id
+        in: path
+        name: templateId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaskTemplateDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: get task template by id
+      tags:
+      - taskTemplate
+    put:
+      consumes:
+      - application/json
+      description: create taskTemplate
+      parameters:
+      - description: template id
+        in: path
+        name: templateId
+        required: true
+        type: string
+      - description: template
+        in: body
+        name: template
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateTaskTemplateDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.UpdateTaskTemplateDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.GeneralErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: update taskTemplate
+      tags:
+      - taskTemplate
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
