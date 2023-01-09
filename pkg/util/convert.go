@@ -54,5 +54,4 @@ func SetDefaultInt64(targetstr string, defaultVal int64) int64 {
 		return number
 	}
 	return defaultVal
-
 }

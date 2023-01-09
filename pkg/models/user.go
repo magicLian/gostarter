@@ -7,13 +7,12 @@ import (
 )
 
 type User struct {
-	Id         string         `json:"id"`
-	Name       string         `json:"username"`
-	CreateTime time.Time      `json:"createTime"`
-	IsAdmin    bool           `json:"isAdmin"`
-	CreatedAt  time.Time      `json:"createdAt"`
-	UpdatedAt  time.Time      `json:"updatedAt"`
-	DeletedAt  gorm.DeletedAt `json:"deletedAt"`
+	Id        string         `json:"id" gorm:"column:id;primary_key;not null;type:varchar(255)"`
+	Name      string         `json:"username"`
+	IsAdmin   bool           `json:"isAdmin"`
+	CreatedAt time.Time      `json:"createdAt"`
+	UpdatedAt time.Time      `json:"updatedAt"`
+	DeletedAt gorm.DeletedAt `json:"deletedAt"`
 }
 
 type SignInUser struct {

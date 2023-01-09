@@ -37,6 +37,10 @@ func (hs *HTTPServer) apiRegister() {
 		{
 			healthRouter.GET("/", hs.healthHandler)
 		}
+		testRouter := v1Group.Group("/test")
+		{
+			testRouter.GET("/", hs.test)
+		}
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

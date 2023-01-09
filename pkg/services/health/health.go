@@ -8,7 +8,7 @@ import (
 )
 
 type Health interface {
-	HealthCheck() (bool, *models.Health)
+	HealthCheck() *models.Health
 }
 
 func ProvideHealthService(storeInterface sqlstore.SqlStoreInterface) Health {
@@ -21,15 +21,14 @@ type HealthService struct {
 	sqlstore sqlstore.SqlStoreInterface
 }
 
-func (h *HealthService) HealthCheck() (bool, *models.Health) {
-	allOk := true
+func (h *HealthService) HealthCheck() *models.Health {
 	result := &models.Health{}
 	if err := h.sqlstore.DBPing(); err != nil {
 		result.Database = models.DATABASE_FAILING
-		allOk = false
 	} else {
 		result.Database = models.DATABASE_OK
 	}
+
 	result.ApiVersion = setting.APIVersion
-	return allOk, result
+	return result
 }
